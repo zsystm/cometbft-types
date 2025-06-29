@@ -21,15 +21,17 @@ type EventStepChange struct {
 }
 
 type EventSendVote struct {
-	BaseEvent     `bson:",inline"`
-	Vote          *core.Vote `bson:"vote"`
-	RecipientPeer string     `bson:"recipientPeer"`
+	BaseEvent       `bson:",inline"`
+	Vote            *core.Vote `bson:"vote"`
+	RecipientPeer   string     `bson:"recipientPeer"`
+	RecipientPeerId string     `bson:"recipientPeerId"`
 }
 
 type EventReceiveVote struct {
-	BaseEvent  `bson:",inline"`
-	Vote       *core.Vote `bson:"vote"`
-	SourcePeer string     `bson:"sourcePeer"`
+	BaseEvent    `bson:",inline"`
+	Vote         *core.Vote `bson:"vote"`
+	SourcePeer   string     `bson:"sourcePeer"`
+	SourcePeerId string     `bson:"sourcePeerId"`
 }
 
 type EventReceivedProposal struct {

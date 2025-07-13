@@ -16,3 +16,7 @@ func (e *BaseEvent) SetNodeId(id string) {
 func (e *BaseEvent) SetValidatorAddress(address string) {
 	e.ValidatorAddress = address
 }
+
+func (e *BaseEvent) GetTimestamp() time.Time {
+	return e.Timestamp
+}

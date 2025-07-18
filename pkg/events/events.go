@@ -1,6 +1,19 @@
 package events
 
-import "github.com/zsystm/cometbft-types/pkg/core"
+import (
+	"github.com/zsystm/cometbft-types/pkg/core"
+	"time"
+)
+
+type RecipientInfo struct {
+	RecipientPeer   string `bson:"recipientPeer"`
+	RecipientPeerId string `bson:"recipientPeerId"`
+}
+
+type SourceInfo struct {
+	SourcePeer   string `bson:"sourcePeer"`
+	SourcePeerId string `bson:"sourcePeerId"`
+}
 
 type EventEnteringNewRound struct {
 	BaseEvent  `bson:",inline"`
@@ -21,19 +34,184 @@ type EventStepChange struct {
 }
 
 type EventSendVote struct {
-	BaseEvent       `bson:",inline"`
-	Vote            *core.Vote `bson:"vote"`
-	RecipientPeer   string     `bson:"recipientPeer"`
-	RecipientPeerId string     `bson:"recipientPeerId"`
+	BaseEvent     `bson:",inline"`
+	Vote          *core.Vote `bson:"vote"`
+	RecipientInfo `bson:",inline"`
 }
 
-type EventReceiveVote struct {
-	BaseEvent    `bson:",inline"`
-	Vote         *core.Vote `bson:"vote"`
-	SourcePeer   string     `bson:"sourcePeer"`
-	SourcePeerId string     `bson:"sourcePeerId"`
+type EventSendNewRoundStep struct {
+	BaseEvent             `bson:",inline"`
+	Height                int64  `bson:"height"`
+	Round                 int32  `bson:"round"`
+	Step                  string `bson:"step"`
+	SecondsSinceStartTime int64  `bson:"secondsSinceStartTime"`
+	LastCommitRound       int32  `bson:"lastCommitRound"`
+	RecipientInfo         `bson:",inline"`
 }
 
+type EventSendNewValidBlock struct {
+	BaseEvent          `bson:",inline"`
+	Height             int64              `bson:"height"`
+	Round              int32              `bson:"round"`
+	BlockPartSetHeader core.PartSetHeader `bson:"blockPartSetHeader"`
+	BlockParts         core.BitArray      `bson:"blockParts"`
+	IsCommit           bool               `bson:"isCommit"`
+	RecipientInfo      `bson:",inline"`
+}
+
+type EventSendProposal struct {
+	BaseEvent     `bson:",inline"`
+	Type          string       `bson:"type"`
+	Height        int64        `bson:"height"`
+	Round         int32        `bson:"round"`
+	PolRound      int32        `bson:"polRound"`
+	BlockID       core.BlockID `bson:"blockId"`
+	Timestamp     time.Time    `bson:"timestamp"`
+	Signature     string       `bson:"signature"`
+	RecipientInfo `bson:",inline"`
+}
+
+type EventSendProposalPOL struct {
+	BaseEvent        `bson:",inline"`
+	Height           int64         `bson:"height"`
+	ProposalPolRound int32         `bson:"proposalPolRound"`
+	ProposalPol      core.BitArray `bson:"proposalPol"`
+	RecipientInfo    `bson:",inline"`
+}
+
+type EventSendBlockPart struct {
+	BaseEvent     `bson:",inline"`
+	Height        int64     `bson:"height"`
+	Round         int32     `bson:"round"`
+	Part          core.Part `bson:"part"`
+	RecipientInfo `bson:",inline"`
+}
+
+type EventSendHasVote struct {
+	BaseEvent     `bson:",inline"`
+	Height        int64  `bson:"height"`
+	Round         int32  `bson:"round"`
+	Type          string `bson:"type"`
+	Index         int32  `bson:"index"`
+	RecipientInfo `bson:",inline"`
+}
+
+type EventSendVoteSetMaj23 struct {
+	BaseEvent     `bson:",inline"`
+	Height        int64        `bson:"height"`
+	Round         int32        `bson:"round"`
+	Type          string       `bson:"type"`
+	BlockID       core.BlockID `bson:"blockId"`
+	RecipientInfo `bson:",inline"`
+}
+
+type EventSendVoteSetBits struct {
+	BaseEvent     `bson:",inline"`
+	Height        int64         `bson:"height"`
+	Round         int32         `bson:"round"`
+	Type          string        `bson:"type"`
+	BlockID       core.BlockID  `bson:"blockId"`
+	Votes         core.BitArray `bson:"bits"`
+	RecipientInfo `bson:",inline"`
+}
+
+type EventSendHasProposalBlockPart struct {
+	BaseEvent     `bson:",inline"`
+	Height        int64 `bson:"height"`
+	Round         int32 `bson:"round"`
+	Index         int32 `bson:"index"`
+	RecipientInfo `bson:",inline"`
+}
+
+type EventReceivePacketNewRoundStep struct {
+	BaseEvent             `bson:",inline"`
+	Height                int64  `bson:"height"`
+	Round                 int32  `bson:"round"`
+	Step                  string `bson:"step"`
+	SecondsSinceStartTime int64  `bson:"secondsSinceStartTime"`
+	LastCommitRound       int32  `bson:"lastCommitRound"`
+	SourceInfo            `bson:",inline"`
+}
+
+type EventReceivePacketNewValidBlock struct {
+	BaseEvent          `bson:",inline"`
+	Height             int64              `bson:"height"`
+	Round              int32              `bson:"round"`
+	BlockPartSetHeader core.PartSetHeader `bson:"blockPartSetHeader"`
+	BlockParts         core.BitArray      `bson:"blockParts"`
+	IsCommit           bool               `bson:"isCommit"`
+	SourceInfo         `bson:",inline"`
+}
+
+type EventReceivePacketProposal struct {
+	BaseEvent  `bson:",inline"`
+	Type       string       `bson:"type"`
+	Height     int64        `bson:"height"`
+	Round      int32        `bson:"round"`
+	PolRound   int32        `bson:"polRound"`
+	BlockID    core.BlockID `bson:"blockId"`
+	Timestamp  time.Time    `bson:"timestamp"`
+	Signature  string       `bson:"signature"`
+	SourceInfo `bson:",inline"`
+}
+
+type EventReceivePacketProposalPOL struct {
+	BaseEvent        `bson:",inline"`
+	Height           int64         `bson:"height"`
+	ProposalPolRound int32         `bson:"proposalPolRound"`
+	ProposalPol      core.BitArray `bson:"proposalPol"`
+	SourceInfo       `bson:",inline"`
+}
+
+type EventReceivePacketBlockPart struct {
+	BaseEvent  `bson:",inline"`
+	Height     int64     `bson:"height"`
+	Round      int32     `bson:"round"`
+	Part       core.Part `bson:"part"`
+	SourceInfo `bson:",inline"`
+}
+
+type EventReceivePacketHasVote struct {
+	BaseEvent  `bson:",inline"`
+	Height     int64  `bson:"height"`
+	Round      int32  `bson:"round"`
+	Type       string `bson:"type"`
+	Index      int32  `bson:"index"`
+	SourceInfo `bson:",inline"`
+}
+
+type EventReceivePacketVote struct {
+	BaseEvent  `bson:",inline"`
+	Vote       *core.Vote `bson:"vote"`
+	SourceInfo `bson:",inline"`
+}
+
+type EventReceivePacketVoteSetMaj23 struct {
+	BaseEvent  `bson:",inline"`
+	Height     int64        `bson:"height"`
+	Round      int32        `bson:"round"`
+	Type       string       `bson:"type"`
+	BlockID    core.BlockID `bson:"blockId"`
+	SourceInfo `bson:",inline"`
+}
+
+type EventReceivePacketVoteSetBits struct {
+	BaseEvent  `bson:",inline"`
+	Height     int64         `bson:"height"`
+	Round      int32         `bson:"round"`
+	Type       string        `bson:"type"`
+	BlockID    core.BlockID  `bson:"blockId"`
+	Votes      core.BitArray `bson:"bits"`
+	SourceInfo `bson:",inline"`
+}
+
+type EventReceivePacketHasProposalBlockPart struct {
+	BaseEvent  `bson:",inline"`
+	Height     int64 `bson:"height"`
+	Round      int32 `bson:"round"`
+	Index      int32 `bson:"index"`
+	SourceInfo `bson:",inline"`
+}
 type EventReceivedProposal struct {
 	BaseEvent `bson:",inline"`
 	Proposal  *core.Proposal `bson:"proposal"`

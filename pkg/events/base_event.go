@@ -3,10 +3,10 @@ package events
 import "time"
 
 type BaseEvent struct {
-	Type             EventTyp  `bson:"type"`
-	Timestamp        time.Time `bson:"timestamp"`
-	NodeId           string    `bson:"nodeId"`
-	ValidatorAddress string    `bson:"validatorAddress"`
+	Type             EventTyp  `bson:"type" json:"type"`
+	Timestamp        time.Time `bson:"timestamp" json:"timestamp"`
+	NodeId           string    `bson:"nodeId" json:"nodeId"`
+	ValidatorAddress string    `bson:"validatorAddress" json:"validatorAddress"`
 }
 
 func (e *BaseEvent) SetNodeId(id string) {

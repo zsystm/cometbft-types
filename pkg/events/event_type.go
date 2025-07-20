@@ -35,4 +35,13 @@ const (
 	EventTypeEnteringWaitStep                  EventTyp = "enteringWaitStep"
 	EventTypeEnteringNewRound                  EventTyp = "enteringNewRound"
 	EventTypeScheduledTimeout                  EventTyp = "scheduledTimeout"
+	EventTypeP2pVote                           EventTyp = "p2pVote"
+	EventTypeP2pBlockPart                      EventTyp = "p2pBlockPart"
+	EventTypeP2pProposal                       EventTyp = "p2pProposal"
+	EventTypeP2pProposalPOL                    EventTyp = "p2pProposalPOL"
+	EventTypeP2pNewRoundStep                   EventTyp = "p2pNewRoundStep"
+	EventTypeP2pHasVote                        EventTyp = "p2pHasVote"
+	EventTypeP2pVoteSetMaj23                   EventTyp = "p2pVoteSetMaj23"
+	EventTypeP2pVoteSetBits                    EventTyp = "p2pVoteSetBits"
+	EventTypeP2pHasProposalBlockPart           EventTyp = "p2pHasProposalBlockPart"
 )

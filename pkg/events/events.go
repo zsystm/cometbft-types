@@ -15,6 +15,13 @@ type SourceInfo struct {
 	SourcePeerId string `bson:"sourcePeerId"`
 }
 
+type StepChangeInfo struct {
+	CurrHeight uint64 `bson:"currentHeight"`
+	CurrRound  uint64 `bson:"currentRound"`
+	CurrStep   string `bson:"currentStep"`
+	TargetStep string `bson:"targetStep"`
+}
+
 type EventEnteringNewRound struct {
 	BaseEvent  `bson:",inline"`
 	Height     uint64 `bson:"height"`
@@ -25,12 +32,42 @@ type EventEnteringNewRound struct {
 	PrevStep   string `bson:"previousStep"`
 }
 
-type EventStepChange struct {
-	BaseEvent  `bson:",inline"`
-	CurrHeight uint64 `bson:"currentHeight"`
-	CurrRound  uint64 `bson:"currentRound"`
-	CurrStep   string `bson:"currentStep"`
-	TargetStep string `bson:"targetStep"`
+type EventProposeStep struct {
+	BaseEvent `bson:",inline"`
+	Height    uint64 `bson:"height"`
+	Round     uint64 `bson:"round"`
+	Proposer  string `bson:"proposer"`
+	IsOurTurn bool   `bson:"isOurTurn"`
+}
+
+type EventEnteringPrevoteStep struct {
+	BaseEvent      `bson:",inline"`
+	StepChangeInfo `bson:",inline"`
+}
+
+type EventEnteringPrecommitStep struct {
+	BaseEvent      `bson:",inline"`
+	StepChangeInfo `bson:",inline"`
+}
+
+type EventEnteringPrevoteWaitStep struct {
+	BaseEvent      `bson:",inline"`
+	StepChangeInfo `bson:",inline"`
+}
+
+type EventEnteringPrecommitWaitStep struct {
+	BaseEvent      `bson:",inline"`
+	StepChangeInfo `bson:",inline"`
+}
+
+type EventEnteringCommitStep struct {
+	BaseEvent      `bson:",inline"`
+	StepChangeInfo `bson:",inline"`
+}
+
+type EventEnteringWaitStep struct {
+	BaseEvent      `bson:",inline"`
+	StepChangeInfo `bson:",inline"`
 }
 
 type EventSendVote struct {

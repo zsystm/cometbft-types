@@ -27,9 +27,9 @@ type EventEnteringNewRound struct {
 	Height     uint64 `bson:"height" json:"height"`
 	Round      uint64 `bson:"round" json:"round"`
 	Proposer   string `bson:"proposer" json:"proposer"`
-	PrevHeight uint64 `bson:"previousHeight" json:"prevHeight"`
-	PrevRound  uint64 `bson:"previousRound" json:"prevRound"`
-	PrevStep   string `bson:"previousStep" json:"prevStep"`
+	PrevHeight uint64 `bson:"previousHeight" json:"previousHeight"`
+	PrevRound  uint64 `bson:"previousRound" json:"previousRound"`
+	PrevStep   string `bson:"previousStep" json:"previousStep"`
 }
 
 type EventProposeStep struct {

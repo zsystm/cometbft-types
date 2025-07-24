@@ -18,10 +18,10 @@ const (
 // P2pInfo contains metadata shared by all P2P message events.
 type P2pInfo struct {
 	Status          P2pMessageStatus `json:"status" bson:"status"`
-	SenderPeerId    string           `json:"sender_peer_id" bson:"sender_peer_id"`
-	RecipientPeerId string           `json:"recipient_peer_id" bson:"recipient_peer_id"`
-	SentTime        time.Time        `json:"sent_time" bson:"sent_time"`
-	ReceivedTime    time.Time        `json:"received_time" bson:"received_time"`
+	SenderPeerId    string           `json:"senderPeerId" bson:"senderPeerId"`
+	RecipientPeerId string           `json:"recipientPeerId" bson:"recipientPeerId"`
+	SentTime        time.Time        `json:"sentTime" bson:"sentTime"`
+	ReceivedTime    time.Time        `json:"receivedTime" bson:"receivedTime"`
 	Latency         time.Duration    `json:"latency" bson:"latency"`
 }
 
@@ -50,9 +50,9 @@ type EventP2pProposal struct {
 	Type      string       `json:"type" bson:"type"`
 	Height    int64        `json:"height" bson:"height"`
 	Round     int32        `json:"round" bson:"round"`
-	PolRound  int32        `json:"pol_round" bson:"pol_round"`
-	BlockID   core.BlockID `json:"block_id" bson:"block_id"`
-	Timestamp time.Time    `json:"proposal_timestamp" bson:"proposal_timestamp"`
+	PolRound  int32        `json:"polRound" bson:"polRound"`
+	BlockID   core.BlockID `json:"blockId" bson:"blockId"`
+	Timestamp time.Time    `json:"proposalTimestamp" bson:"proposalTimestamp"`
 	Signature string       `json:"signature" bson:"signature"`
 	P2pInfo   `json:",inline" bson:",inline"`
 }
@@ -61,8 +61,8 @@ type EventP2pProposal struct {
 type EventP2pProposalPOL struct {
 	BaseEvent        `bson:",inline"`
 	Height           int64         `json:"height" bson:"height"`
-	ProposalPolRound int32         `json:"proposal_pol_round" bson:"proposal_pol_round"`
-	ProposalPol      core.BitArray `json:"proposal_pol" bson:"proposal_pol"`
+	ProposalPolRound int32         `json:"proposalPolRound" bson:"proposalPolRound"`
+	ProposalPol      core.BitArray `json:"proposalPol" bson:"proposalPol"`
 	P2pInfo          `json:",inline" bson:",inline"`
 }
 
@@ -72,8 +72,8 @@ type EventP2pNewRoundStep struct {
 	Height                int64  `json:"height" bson:"height"`
 	Round                 int32  `json:"round" bson:"round"`
 	Step                  string `json:"step" bson:"step"`
-	SecondsSinceStartTime int32  `json:"seconds_since_start_time" bson:"seconds_since_start_time"`
-	LastCommitRound       int32  `json:"last_commit_round" bson:"last_commit_round"`
+	SecondsSinceStartTime int32  `json:"secondsSinceStartTime" bson:"secondsSinceStartTime"`
+	LastCommitRound       int32  `json:"lastCommitRound" bson:"lastCommitRound"`
 	P2pInfo               `json:",inline" bson:",inline"`
 }
 
@@ -93,7 +93,7 @@ type EventP2pVoteSetMaj23 struct {
 	Height    int64         `json:"height" bson:"height"`
 	Round     int32         `json:"round" bson:"round"`
 	Type      string        `json:"type" bson:"type"`
-	BlockID   *core.BlockID `json:"block_id" bson:"block_id"`
+	BlockID   *core.BlockID `json:"blockId" bson:"blockId"`
 	P2pInfo   `json:",inline" bson:",inline"`
 }
 
@@ -103,7 +103,7 @@ type EventP2pVoteSetBits struct {
 	Height    int64         `json:"height" bson:"height"`
 	Round     int32         `json:"round" bson:"round"`
 	Type      string        `json:"type" bson:"type"`
-	BlockID   *core.BlockID `json:"block_id" bson:"block_id"`
+	BlockID   *core.BlockID `json:"blockId" bson:"blockId"`
 	Votes     core.BitArray `json:"votes" bson:"votes"`
 	P2pInfo   `json:",inline" bson:",inline"`
 }

@@ -24,3 +24,7 @@ func (e *BaseEvent) GetNodeId() string {
 func (e *BaseEvent) GetTimestamp() time.Time {
 	return e.Timestamp
 }
+
+func (e *BaseEvent) GetValidatorAddress() string {
+	return e.ValidatorAddress
+}

@@ -14,3 +14,11 @@ type Vote struct {
 	Extension          string    `bson:"extension" json:"extension"`
 	ExtensionSignature string    `bson:"extensionSignature" json:"extensionSignature"`
 }
+
+func (v *Vote) GetHeight() uint64 {
+	return v.Height
+}
+
+func (v *Vote) GetRound() uint64 {
+	return v.Round
+}

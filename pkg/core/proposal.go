@@ -10,3 +10,11 @@ type Proposal struct {
 	Timestamp time.Time `bson:"timestamp" json:"timestamp"`
 	Signature string    `bson:"signature" json:"signature"`
 }
+
+func (p *Proposal) GetHeight() uint64 {
+	return p.Height
+}
+
+func (p *Proposal) GetRound() uint64 {
+	return p.Round
+}

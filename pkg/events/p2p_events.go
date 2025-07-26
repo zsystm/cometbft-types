@@ -35,6 +35,20 @@ type EventP2pVote struct {
 	P2pInfo   `json:",inline" bson:",inline"`
 }
 
+func (e *EventP2pVote) GetHeight() uint64 {
+	if e.Vote != nil {
+		return e.Vote.Height
+	}
+	return 0
+}
+
+func (e *EventP2pVote) GetRound() uint64 {
+	if e.Vote != nil {
+		return e.Vote.Round
+	}
+	return 0
+}
+
 // EventP2pBlockPart represents a confirmed block part message exchange
 type EventP2pBlockPart struct {
 	BaseEvent `bson:",inline"`
@@ -42,6 +56,14 @@ type EventP2pBlockPart struct {
 	Round     int32     `json:"round" bson:"round"`
 	Part      core.Part `json:"part" bson:"part"`
 	P2pInfo   `json:",inline" bson:",inline"`
+}
+
+func (e *EventP2pBlockPart) GetHeight() uint64 {
+	return uint64(e.Height)
+}
+
+func (e *EventP2pBlockPart) GetRound() uint64 {
+	return uint64(e.Round)
 }
 
 // EventP2pProposal represents a confirmed proposal message exchange
@@ -57,6 +79,14 @@ type EventP2pProposal struct {
 	P2pInfo   `json:",inline" bson:",inline"`
 }
 
+func (e *EventP2pProposal) GetHeight() uint64 {
+	return uint64(e.Height)
+}
+
+func (e *EventP2pProposal) GetRound() uint64 {
+	return uint64(e.Round)
+}
+
 // EventP2pProposalPOL represents a confirmed proposal POL message exchange
 type EventP2pProposalPOL struct {
 	BaseEvent        `bson:",inline"`
@@ -64,6 +94,10 @@ type EventP2pProposalPOL struct {
 	ProposalPolRound int32         `json:"proposalPolRound" bson:"proposalPolRound"`
 	ProposalPol      core.BitArray `json:"proposalPol" bson:"proposalPol"`
 	P2pInfo          `json:",inline" bson:",inline"`
+}
+
+func (e *EventP2pProposalPOL) GetHeight() uint64 {
+	return uint64(e.Height)
 }
 
 // EventP2pNewRoundStep represents a confirmed new round step message exchange
@@ -77,6 +111,14 @@ type EventP2pNewRoundStep struct {
 	P2pInfo               `json:",inline" bson:",inline"`
 }
 
+func (e *EventP2pNewRoundStep) GetHeight() uint64 {
+	return uint64(e.Height)
+}
+
+func (e *EventP2pNewRoundStep) GetRound() uint64 {
+	return uint64(e.Round)
+}
+
 // EventP2pHasVote represents a confirmed has vote message exchange
 type EventP2pHasVote struct {
 	BaseEvent `bson:",inline"`
@@ -85,6 +127,14 @@ type EventP2pHasVote struct {
 	Type      string `json:"type" bson:"type"`
 	Index     int32  `json:"index" bson:"index"`
 	P2pInfo   `json:",inline" bson:",inline"`
+}
+
+func (e *EventP2pHasVote) GetHeight() uint64 {
+	return uint64(e.Height)
+}
+
+func (e *EventP2pHasVote) GetRound() uint64 {
+	return uint64(e.Round)
 }
 
 // EventP2pVoteSetMaj23 represents a confirmed vote set majority message exchange
@@ -97,6 +147,14 @@ type EventP2pVoteSetMaj23 struct {
 	P2pInfo   `json:",inline" bson:",inline"`
 }
 
+func (e *EventP2pVoteSetMaj23) GetHeight() uint64 {
+	return uint64(e.Height)
+}
+
+func (e *EventP2pVoteSetMaj23) GetRound() uint64 {
+	return uint64(e.Round)
+}
+
 // EventP2pVoteSetBits represents a confirmed vote set bits message exchange
 type EventP2pVoteSetBits struct {
 	BaseEvent `bson:",inline"`
@@ -106,4 +164,12 @@ type EventP2pVoteSetBits struct {
 	BlockID   *core.BlockID `json:"blockId" bson:"blockId"`
 	Votes     core.BitArray `json:"votes" bson:"votes"`
 	P2pInfo   `json:",inline" bson:",inline"`
+}
+
+func (e *EventP2pVoteSetBits) GetHeight() uint64 {
+	return uint64(e.Height)
+}
+
+func (e *EventP2pVoteSetBits) GetRound() uint64 {
+	return uint64(e.Round)
 }

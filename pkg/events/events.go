@@ -91,16 +91,12 @@ type EventEnteringCommitStep struct {
 
 type EventCommittedBlock struct {
 	BaseEvent `bson:",inline" json:",inline"`
-	Height    uint64 `bson:"height" json:"height"`
-	Round     uint64 `bson:"round" json:"round"`
+	Height    uint64      `bson:"height" json:"height"`
+	Block     *core.Block `bson:"block" json:"block"`
 }
 
 func (e *EventCommittedBlock) GetHeight() uint64 {
 	return e.Height
-}
-
-func (e *EventCommittedBlock) GetRound() uint64 {
-	return e.Round
 }
 
 type EventEnteringWaitStep struct {

@@ -32,6 +32,7 @@ const (
 	EventTypeEnteringPrevoteWaitStep           EventTyp = "enteringPrevoteWaitStep"
 	EventTypeEnteringPrecommitWaitStep         EventTyp = "enteringPrecommitWaitStep"
 	EventTypeEnteringCommitStep                EventTyp = "enteringCommitStep"
+	EventTypeCommittedBlock                    EventTyp = "committedBlock"
 	EventTypeEnteringWaitStep                  EventTyp = "enteringWaitStep"
 	EventTypeEnteringNewRound                  EventTyp = "enteringNewRound"
 	EventTypeScheduledTimeout                  EventTyp = "scheduledTimeout"

@@ -27,3 +27,7 @@ type ConsensusEvent interface {
 	Event
 	HasHeightAndRound
 }
+
+type HasRawBytes interface {
+	GetRawBytes() []byte
+}

@@ -15,6 +15,10 @@ type SourceInfo struct {
 	SourcePeerId string `bson:"sourcePeerId" json:"sourcePeerId"`
 }
 
+type MsgInfo struct {
+	MsgBytes []byte `bson:"msgBytes" json:"msgBytes"`
+}
+
 type StepChangeInfo struct {
 	CurrHeight uint64 `bson:"currentHeight" json:"currentHeight"`
 	CurrRound  uint64 `bson:"currentRound" json:"currentRound"`
@@ -108,6 +112,11 @@ type EventSendVote struct {
 	BaseEvent     `bson:",inline" json:",inline"`
 	Vote          *core.Vote `bson:"vote" json:"vote"`
 	RecipientInfo `bson:",inline" json:",inline"`
+	MsgInfo       `bson:",inline" json:",inline"`
+}
+
+func (e *EventSendVote) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
 }
 
 type EventSendNewRoundStep struct {
@@ -118,6 +127,7 @@ type EventSendNewRoundStep struct {
 	SecondsSinceStartTime int64  `bson:"secondsSinceStartTime" json:"secondsSinceStartTime"`
 	LastCommitRound       int32  `bson:"lastCommitRound" json:"lastCommitRound"`
 	RecipientInfo         `bson:",inline" json:",inline"`
+	MsgInfo               `bson:",inline" json:",inline"`
 }
 
 func (e *EventSendNewRoundStep) GetHeight() uint64 {
@@ -128,6 +138,10 @@ func (e *EventSendNewRoundStep) GetRound() uint64 {
 	return uint64(e.Round)
 }
 
+func (e *EventSendNewRoundStep) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
+}
+
 type EventSendNewValidBlock struct {
 	BaseEvent          `bson:",inline" json:",inline"`
 	Height             int64              `bson:"height" json:"height"`
@@ -136,6 +150,7 @@ type EventSendNewValidBlock struct {
 	BlockParts         core.BitArray      `bson:"blockParts" json:"blockParts"`
 	IsCommit           bool               `bson:"isCommit" json:"isCommit"`
 	RecipientInfo      `bson:",inline" json:",inline"`
+	MsgInfo            `bson:",inline" json:",inline"`
 }
 
 func (e *EventSendNewValidBlock) GetHeight() uint64 {
@@ -144,6 +159,10 @@ func (e *EventSendNewValidBlock) GetHeight() uint64 {
 
 func (e *EventSendNewValidBlock) GetRound() uint64 {
 	return uint64(e.Round)
+}
+
+func (e *EventSendNewValidBlock) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
 }
 
 type EventSendProposal struct {
@@ -156,6 +175,7 @@ type EventSendProposal struct {
 	Timestamp     time.Time    `bson:"timestamp" json:"timestamp"`
 	Signature     string       `bson:"signature" json:"signature"`
 	RecipientInfo `bson:",inline" json:",inline"`
+	MsgInfo       `bson:",inline" json:",inline"`
 }
 
 func (e *EventSendProposal) GetHeight() uint64 {
@@ -166,16 +186,25 @@ func (e *EventSendProposal) GetRound() uint64 {
 	return uint64(e.Round)
 }
 
+func (e *EventSendProposal) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
+}
+
 type EventSendProposalPOL struct {
 	BaseEvent        `bson:",inline" json:",inline"`
 	Height           int64         `bson:"height" json:"height"`
 	ProposalPolRound int32         `bson:"proposalPolRound" json:"proposalPolRound"`
 	ProposalPol      core.BitArray `bson:"proposalPol" json:"proposalPol"`
 	RecipientInfo    `bson:",inline" json:",inline"`
+	MsgInfo          `bson:",inline" json:",inline"`
 }
 
 func (e *EventSendProposalPOL) GetHeight() uint64 {
 	return uint64(e.Height)
+}
+
+func (e *EventSendProposalPOL) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
 }
 
 type EventSendBlockPart struct {
@@ -184,6 +213,7 @@ type EventSendBlockPart struct {
 	Round         int32     `bson:"round" json:"round"`
 	Part          core.Part `bson:"part" json:"part"`
 	RecipientInfo `bson:",inline" json:",inline"`
+	MsgInfo       `bson:",inline" json:",inline"`
 }
 
 func (e *EventSendBlockPart) GetHeight() uint64 {
@@ -194,6 +224,10 @@ func (e *EventSendBlockPart) GetRound() uint64 {
 	return uint64(e.Round)
 }
 
+func (e *EventSendBlockPart) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
+}
+
 type EventSendHasVote struct {
 	BaseEvent     `bson:",inline" json:",inline"`
 	Height        int64  `bson:"height" json:"height"`
@@ -201,6 +235,7 @@ type EventSendHasVote struct {
 	Type          string `bson:"type" json:"type"`
 	Index         int32  `bson:"index" json:"index"`
 	RecipientInfo `bson:",inline" json:",inline"`
+	MsgInfo       `bson:",inline" json:",inline"`
 }
 
 func (e *EventSendHasVote) GetHeight() uint64 {
@@ -211,6 +246,10 @@ func (e *EventSendHasVote) GetRound() uint64 {
 	return uint64(e.Round)
 }
 
+func (e *EventSendHasVote) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
+}
+
 type EventSendVoteSetMaj23 struct {
 	BaseEvent     `bson:",inline" json:",inline"`
 	Height        int64        `bson:"height" json:"height"`
@@ -218,6 +257,7 @@ type EventSendVoteSetMaj23 struct {
 	Type          string       `bson:"type" json:"type"`
 	BlockID       core.BlockID `bson:"blockId" json:"blockId"`
 	RecipientInfo `bson:",inline" json:",inline"`
+	MsgInfo       `bson:",inline" json:",inline"`
 }
 
 func (e *EventSendVoteSetMaj23) GetHeight() uint64 {
@@ -228,6 +268,10 @@ func (e *EventSendVoteSetMaj23) GetRound() uint64 {
 	return uint64(e.Round)
 }
 
+func (e *EventSendVoteSetMaj23) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
+}
+
 type EventSendVoteSetBits struct {
 	BaseEvent     `bson:",inline" json:",inline"`
 	Height        int64         `bson:"height" json:"height"`
@@ -236,6 +280,7 @@ type EventSendVoteSetBits struct {
 	BlockID       core.BlockID  `bson:"blockId" json:"blockId"`
 	Votes         core.BitArray `bson:"bits" json:"votes"`
 	RecipientInfo `bson:",inline" json:",inline"`
+	MsgInfo       `bson:",inline" json:",inline"`
 }
 
 func (e *EventSendVoteSetBits) GetHeight() uint64 {
@@ -246,12 +291,17 @@ func (e *EventSendVoteSetBits) GetRound() uint64 {
 	return uint64(e.Round)
 }
 
+func (e *EventSendVoteSetBits) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
+}
+
 type EventSendHasProposalBlockPart struct {
 	BaseEvent     `bson:",inline" json:",inline"`
 	Height        int64 `bson:"height" json:"height"`
 	Round         int32 `bson:"round" json:"round"`
 	Index         int32 `bson:"index" json:"index"`
 	RecipientInfo `bson:",inline" json:",inline"`
+	MsgInfo       `bson:",inline" json:",inline"`
 }
 
 func (e *EventSendHasProposalBlockPart) GetHeight() uint64 {
@@ -262,6 +312,10 @@ func (e *EventSendHasProposalBlockPart) GetRound() uint64 {
 	return uint64(e.Round)
 }
 
+func (e *EventSendHasProposalBlockPart) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
+}
+
 type EventReceivePacketNewRoundStep struct {
 	BaseEvent             `bson:",inline" json:",inline"`
 	Height                int64  `bson:"height" json:"height"`
@@ -270,6 +324,7 @@ type EventReceivePacketNewRoundStep struct {
 	SecondsSinceStartTime int64  `bson:"secondsSinceStartTime" json:"secondsSinceStartTime"`
 	LastCommitRound       int32  `bson:"lastCommitRound" json:"lastCommitRound"`
 	SourceInfo            `bson:",inline" json:",inline"`
+	MsgInfo               `bson:",inline" json:",inline"`
 }
 
 func (e *EventReceivePacketNewRoundStep) GetHeight() uint64 {
@@ -280,6 +335,10 @@ func (e *EventReceivePacketNewRoundStep) GetRound() uint64 {
 	return uint64(e.Round)
 }
 
+func (e *EventReceivePacketNewRoundStep) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
+}
+
 type EventReceivePacketNewValidBlock struct {
 	BaseEvent          `bson:",inline" json:",inline"`
 	Height             int64              `bson:"height" json:"height"`
@@ -288,6 +347,7 @@ type EventReceivePacketNewValidBlock struct {
 	BlockParts         core.BitArray      `bson:"blockParts" json:"blockParts"`
 	IsCommit           bool               `bson:"isCommit" json:"isCommit"`
 	SourceInfo         `bson:",inline" json:",inline"`
+	MsgInfo            `bson:",inline" json:",inline"`
 }
 
 func (e *EventReceivePacketNewValidBlock) GetHeight() uint64 {
@@ -296,6 +356,10 @@ func (e *EventReceivePacketNewValidBlock) GetHeight() uint64 {
 
 func (e *EventReceivePacketNewValidBlock) GetRound() uint64 {
 	return uint64(e.Round)
+}
+
+func (e *EventReceivePacketNewValidBlock) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
 }
 
 type EventReceivePacketProposal struct {
@@ -308,6 +372,7 @@ type EventReceivePacketProposal struct {
 	Timestamp  time.Time    `bson:"timestamp" json:"timestamp"`
 	Signature  string       `bson:"signature" json:"signature"`
 	SourceInfo `bson:",inline" json:",inline"`
+	MsgInfo    `bson:",inline" json:",inline"`
 }
 
 func (e *EventReceivePacketProposal) GetHeight() uint64 {
@@ -318,16 +383,25 @@ func (e *EventReceivePacketProposal) GetRound() uint64 {
 	return uint64(e.Round)
 }
 
+func (e *EventReceivePacketProposal) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
+}
+
 type EventReceivePacketProposalPOL struct {
 	BaseEvent        `bson:",inline" json:",inline"`
 	Height           int64         `bson:"height" json:"height"`
 	ProposalPolRound int32         `bson:"proposalPolRound" json:"proposalPolRound"`
 	ProposalPol      core.BitArray `bson:"proposalPol" json:"proposalPol"`
 	SourceInfo       `bson:",inline" json:",inline"`
+	MsgInfo          `bson:",inline" json:",inline"`
 }
 
 func (e *EventReceivePacketProposalPOL) GetHeight() uint64 {
 	return uint64(e.Height)
+}
+
+func (e *EventReceivePacketProposalPOL) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
 }
 
 type EventReceivePacketBlockPart struct {
@@ -336,6 +410,7 @@ type EventReceivePacketBlockPart struct {
 	Round      int32     `bson:"round" json:"round"`
 	Part       core.Part `bson:"part" json:"part"`
 	SourceInfo `bson:",inline" json:",inline"`
+	MsgInfo    `bson:",inline" json:",inline"`
 }
 
 func (e *EventReceivePacketBlockPart) GetHeight() uint64 {
@@ -346,6 +421,10 @@ func (e *EventReceivePacketBlockPart) GetRound() uint64 {
 	return uint64(e.Round)
 }
 
+func (e *EventReceivePacketBlockPart) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
+}
+
 type EventReceivePacketHasVote struct {
 	BaseEvent  `bson:",inline" json:",inline"`
 	Height     int64  `bson:"height" json:"height"`
@@ -353,6 +432,7 @@ type EventReceivePacketHasVote struct {
 	Type       string `bson:"type" json:"type"`
 	Index      int32  `bson:"index" json:"index"`
 	SourceInfo `bson:",inline" json:",inline"`
+	MsgInfo    `bson:",inline" json:",inline"`
 }
 
 func (e *EventReceivePacketHasVote) GetHeight() uint64 {
@@ -363,10 +443,19 @@ func (e *EventReceivePacketHasVote) GetRound() uint64 {
 	return uint64(e.Round)
 }
 
+func (e *EventReceivePacketHasVote) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
+}
+
 type EventReceivePacketVote struct {
 	BaseEvent  `bson:",inline" json:",inline"`
 	Vote       *core.Vote `bson:"vote" json:"vote"`
 	SourceInfo `bson:",inline" json:",inline"`
+	MsgInfo    `bson:",inline" json:",inline"`
+}
+
+func (e *EventReceivePacketVote) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
 }
 
 type EventReceivePacketVoteSetMaj23 struct {
@@ -376,6 +465,7 @@ type EventReceivePacketVoteSetMaj23 struct {
 	Type       string       `bson:"type" json:"type"`
 	BlockID    core.BlockID `bson:"blockId" json:"blockId"`
 	SourceInfo `bson:",inline" json:",inline"`
+	MsgInfo    `bson:",inline" json:",inline"`
 }
 
 func (e *EventReceivePacketVoteSetMaj23) GetHeight() uint64 {
@@ -386,6 +476,10 @@ func (e *EventReceivePacketVoteSetMaj23) GetRound() uint64 {
 	return uint64(e.Round)
 }
 
+func (e *EventReceivePacketVoteSetMaj23) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
+}
+
 type EventReceivePacketVoteSetBits struct {
 	BaseEvent  `bson:",inline" json:",inline"`
 	Height     int64         `bson:"height" json:"height"`
@@ -394,6 +488,7 @@ type EventReceivePacketVoteSetBits struct {
 	BlockID    core.BlockID  `bson:"blockId" json:"blockId"`
 	Votes      core.BitArray `bson:"bits" json:"votes"`
 	SourceInfo `bson:",inline" json:",inline"`
+	MsgInfo    `bson:",inline" json:",inline"`
 }
 
 func (e *EventReceivePacketVoteSetBits) GetHeight() uint64 {
@@ -404,12 +499,17 @@ func (e *EventReceivePacketVoteSetBits) GetRound() uint64 {
 	return uint64(e.Round)
 }
 
+func (e *EventReceivePacketVoteSetBits) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
+}
+
 type EventReceivePacketHasProposalBlockPart struct {
 	BaseEvent  `bson:",inline" json:",inline"`
 	Height     int64 `bson:"height" json:"height"`
 	Round      int32 `bson:"round" json:"round"`
 	Index      int32 `bson:"index" json:"index"`
 	SourceInfo `bson:",inline" json:",inline"`
+	MsgInfo    `bson:",inline" json:",inline"`
 }
 
 func (e *EventReceivePacketHasProposalBlockPart) GetHeight() uint64 {
@@ -418,6 +518,10 @@ func (e *EventReceivePacketHasProposalBlockPart) GetHeight() uint64 {
 
 func (e *EventReceivePacketHasProposalBlockPart) GetRound() uint64 {
 	return uint64(e.Round)
+}
+
+func (e *EventReceivePacketHasProposalBlockPart) GetRawBytes() []byte {
+	return e.MsgInfo.MsgBytes
 }
 
 type EventReceivedProposal struct {

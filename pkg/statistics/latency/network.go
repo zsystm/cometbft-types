@@ -37,21 +37,13 @@ type LatencyHistogram struct {
 // UnmatchedMessageStats provides statistics about unmatched messages across all nodes.
 type UnmatchedMessageStats struct {
 	// Unmatched sends (sends without receives)
-	TotalUnmatchedSends  int            `json:"totalUnmatchedSends" bson:"totalUnmatchedSends"`
-	UnmatchedSendsByType map[string]int `json:"unmatchedSendsByType" bson:"unmatchedSendsByType"`
-	UnmatchedSendsByPeer map[string]int `json:"unmatchedSendsByPeer" bson:"unmatchedSendsByPeer"`
-	UnmatchedSendsByNode map[string]int `json:"unmatchedSendsByNode" bson:"unmatchedSendsByNode"`
+	TotalUnmatchedSends int `json:"totalUnmatchedSends" bson:"totalUnmatchedSends"`
 
 	// Unmatched receives (receives without sends)
-	TotalUnmatchedReceives  int            `json:"totalUnmatchedReceives" bson:"totalUnmatchedReceives"`
-	UnmatchedReceivesByType map[string]int `json:"unmatchedReceivesByType" bson:"unmatchedReceivesByType"`
-	UnmatchedReceivesByPeer map[string]int `json:"unmatchedReceivesByPeer" bson:"unmatchedReceivesByPeer"`
-	UnmatchedReceivesByNode map[string]int `json:"unmatchedReceivesByNode" bson:"unmatchedReceivesByNode"`
+	TotalUnmatchedReceives int `json:"totalUnmatchedReceives" bson:"totalUnmatchedReceives"`
 
 	// Overall health metrics across all nodes
-	TotalMessages     int     `json:"totalMessages" bson:"totalMessages"`
-	SuccessfulMatches int     `json:"successfulMatches" bson:"successfulMatches"`
-	MatchSuccessRate  float64 `json:"matchSuccessRate" bson:"matchSuccessRate"`
+	TotalMessages int `json:"totalMessages" bson:"totalMessages"`
 }
 
 // NodeNetworkStats provides network statistics for a specific node.
@@ -60,20 +52,12 @@ type NodeNetworkStats struct {
 	ValidatorAddress string `json:"validatorAddress" bson:"validatorAddress"`
 
 	// Message counts
-	TotalSends        int `json:"totalSends" bson:"totalSends"`
-	TotalReceives     int `json:"totalReceives" bson:"totalReceives"`
-	SuccessfulMatches int `json:"successfulMatches" bson:"successfulMatches"`
+	TotalSends    int `json:"totalSends" bson:"totalSends"`
+	TotalReceives int `json:"totalReceives" bson:"totalReceives"`
 
 	// Unmatched messages for this node
-	UnmatchedSends          int            `json:"unmatchedSends" bson:"unmatchedSends"`
-	UnmatchedReceives       int            `json:"unmatchedReceives" bson:"unmatchedReceives"`
-	UnmatchedSendsByType    map[string]int `json:"unmatchedSendsByType" bson:"unmatchedSendsByType"`
-	UnmatchedReceivesByType map[string]int `json:"unmatchedReceivesByType" bson:"unmatchedReceivesByType"`
-	UnmatchedSendsByPeer    map[string]int `json:"unmatchedSendsByPeer" bson:"unmatchedSendsByPeer"`
-	UnmatchedReceivesByPeer map[string]int `json:"unmatchedReceivesByPeer" bson:"unmatchedReceivesByPeer"`
-
-	// Success rate for this node
-	MatchSuccessRate float64 `json:"matchSuccessRate" bson:"matchSuccessRate"`
+	UnmatchedSends    int `json:"unmatchedSends" bson:"unmatchedSends"`
+	UnmatchedReceives int `json:"unmatchedReceives" bson:"unmatchedReceives"`
 
 	// Peer connections for this node
 	ConnectedPeers []string `json:"connectedPeers" bson:"connectedPeers"`

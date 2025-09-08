@@ -3,11 +3,12 @@ package events
 import "time"
 
 type Event interface {
-	SetNodeId(id string)
 	SetValidatorAddress(address string)
+	GetValidatorAddress() string
+	GetEventType() EventTyp
+	SetNodeId(id string)
 	GetNodeId() string
 	GetTimestamp() time.Time
-	GetValidatorAddress() string
 }
 
 type HasHeight interface {

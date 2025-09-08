@@ -121,9 +121,10 @@ func (e *EventP2pNewRoundStep) GetRound() uint64 {
 // EventP2pHasVote represents a confirmed has vote message exchange
 type EventP2pHasVote struct {
 	BaseEvent `bson:",inline"`
-	Height    int64 `json:"height" bson:"height"`
-	Round     int32 `json:"round" bson:"round"`
-	Index     int32 `json:"index" bson:"index"`
+	Type      string `json:"type" bson:"type"`
+	Height    int64  `json:"height" bson:"height"`
+	Round     int32  `json:"round" bson:"round"`
+	Index     int32  `json:"index" bson:"index"`
 	P2pInfo   `json:",inline" bson:",inline"`
 }
 
@@ -138,6 +139,7 @@ func (e *EventP2pHasVote) GetRound() uint64 {
 // EventP2pVoteSetMaj23 represents a confirmed vote set majority message exchange
 type EventP2pVoteSetMaj23 struct {
 	BaseEvent `bson:",inline"`
+	Type      string        `json:"type" bson:"type"`
 	Height    int64         `json:"height" bson:"height"`
 	Round     int32         `json:"round" bson:"round"`
 	BlockID   *core.BlockID `json:"blockId" bson:"blockId"`
@@ -155,6 +157,7 @@ func (e *EventP2pVoteSetMaj23) GetRound() uint64 {
 // EventP2pVoteSetBits represents a confirmed vote set bits message exchange
 type EventP2pVoteSetBits struct {
 	BaseEvent `bson:",inline"`
+	Type      string        `json:"type" bson:"type"`
 	Height    int64         `json:"height" bson:"height"`
 	Round     int32         `json:"round" bson:"round"`
 	BlockID   *core.BlockID `json:"blockId" bson:"blockId"`
